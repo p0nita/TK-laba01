@@ -13,43 +13,16 @@ public class Matrix {
         column = c;
     }
 
-    public Matrix (String s){
-        row = 1;
-        column = s.length();
-        element = new int[1][column];
-        for (int i = 0; i < column; i++){
-            element[0][i] = s.charAt(i) == '0' ? 0 : 1;
-        }
-    }
+    //public Matrix (String s){
+    //    row = 1;
+    //    column = s.length();
+    //    element = new int[1][column];
+    //    for (int i = 0; i < column; i++){
+    //        element[0][i] = s.charAt(i) == '0' ? 0 : 1;
+    //    }
+    //}
 
-    private static long factorial(int n){
-        long f = 1;
-        for(int i = 1; i < n; i++)
-            f *= i;
-        return f;
-    }
 
-    private static long c(int a, int b){
-        return factorial(b)/(factorial(a)*(factorial(b-a)));
-    }
-
-    public static double hamming (int n, int t){
-        long tmp = 0;
-        for (int i = 0; i <= t; i++)
-            tmp += c(i, n);
-        return Math.pow(2, n)/tmp;
-    }
-
-    public static double hilbert (int n, int d){
-        long tmp = 0;
-        for (int i = 0; i <= d-1; i++)
-            tmp += c(i, n);
-        return Math.pow(2, n)/tmp;
-    }
-
-    public static double singletone (int n, int d){
-        return Math.pow(2, n-d+1);
-    }
 
     public void setElement(int r, int c, int value)
     {
@@ -61,7 +34,7 @@ public class Matrix {
         return element[r][c];
     }
 
-    public int getRow(){
+    /*public int getRow(){
         return row;
     }
 
@@ -92,7 +65,7 @@ public class Matrix {
             }
         tmp.mod2(); // Для двоичной арифметики!
         return tmp;
-    }
+    } */
 
     public final boolean equals(Object m)
     {
@@ -132,7 +105,7 @@ public class Matrix {
                 res.setElement(i, j, tmp);
             }
         }
-        res.mod2(); // Для двоичной арифметики!
+        res.mod2();
         return res;
     }
 
@@ -148,7 +121,7 @@ public class Matrix {
         return res;
     }
 
-    public Matrix getH(){
+    /* public Matrix getH(){
         Matrix res = new Matrix(column - row, column);
         for (int i = column - row +1, r = 0; i < column; i++, r++){
             for (int j = 0; j < row; j++){
@@ -170,19 +143,48 @@ public class Matrix {
         return res;
     }
 
-    public boolean isNull(){
-        for (int i = 0; i < row; i++){
-            for (int j = 0; j < column; j++){
-                if (element[i][j] != 0) return false;
-            }
-        }
-        return true;
-    }
+     public boolean isNull(){
+         for (int i = 0; i < row; i++){
+             for (int j = 0; j < column; j++){
+                 if (element[i][j] != 0) return false;
+             }
+         }
+         return true;
+     } */
 
     public void mod2(){
         for (int i = 0; i < row; i++)
             for (int j = 0; j < column; j++)
                 element[i][j] %= 2;
+    }
+
+    private static long factorial(int n){
+        long f = 1;
+        for(int i = 1; i < n; i++)
+            f *= i;
+        return f;
+    }
+
+    private static long c(int a, int b){
+        return factorial(b)/(factorial(a)*(factorial(b-a)));
+    }
+
+    public static double hamming (int n, int t){
+        long tmp = 0;
+        for (int i = 0; i <= t; i++)
+            tmp += c(i, n);
+        return Math.pow(2, n)/tmp;
+    }
+
+    public static double hilbert (int n, int d){
+        long tmp = 0;
+        for (int i = 0; i <= d-1; i++)
+            tmp += c(i, n);
+        return Math.pow(2, n)/tmp;
+    }
+
+    public static double singleton (int n, int d){
+        return Math.pow(2, n-d+1);
     }
 
     public String toString(){

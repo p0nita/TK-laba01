@@ -5,35 +5,51 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        int n = 5;
-        Matrix test = Matrix.getG(n, 3);
-        Matrix vocab = test.getVocabulary();
-        Matrix h = test.getH();
-        Matrix ht = h.transpon();
-        Matrix word = new Matrix(1, n);
-        Matrix check;
-        int d = vocab.minD();
-        System.out.println("G = \n" + test);
-        System.out.println("Vocabulary = \n" + vocab);
-        System.out.println("d = " + d);
-        int t = (d - 1) / 2;
-        System.out.println("t = " + t);
-        System.out.println("\nH = \n" + h);
-        System.out.println("Ht = \n" + ht);
-        for (int i = 0; i < 10; i++){
-            for (int j = 0; j < n; j++){
-                word.setElement(0, j, (int)Math.round(Math.random()));
-            }
-            check = word.product(ht);
-            System.out.println("WORD = \n" + word + (check.isNull() ? "in vocabulary" : "doesn't exist") + "\n");
-        }
-        //     Scanner scanner = new Scanner(System.in);
-        //     word = new Matrix(scanner.nextLine());
-        //     check = word.product(ht);
-        //     System.out.println("WORD = \n" + word + (check.isNull() ? "in vocabulary" : "doesn't exist") + "\n");
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Input N: ");
+        String N = sc.nextLine();
+        int n = Integer.parseInt(N);
 
-        System.out.println(Matrix.hamming(n, t));
-        System.out.println(Matrix.hilbert(n, d));
-        System.out.println(Matrix.singletone(n, d));
+        System.out.println("Input K: ");
+        String K = sc.nextLine();
+        int k = Integer.parseInt(K);
+
+        Matrix test = Matrix.getG(n, k);
+        System.out.println("G = \n" + test);
+
+        Matrix vocab = test.getVocabulary();
+        System.out.println("Code words = \n" + vocab);
+        System.out.println("Number of words in the code = " + (int)Math.pow(2, k));
+
+    //   Matrix h = test.getH();
+    //   System.out.println("\nH = \n" + h);
+
+    //   Matrix ht = h.transpon();
+    //   System.out.println("Ht = \n" + ht);
+
+    //    Matrix check;
+    //    Matrix word = new Matrix(1, n);
+
+        int d = vocab.minD();
+        System.out.println("Min distance = " + d);
+
+        int t = (d - 1) / 2;
+        System.out.println("The correction of the erroneous bits = " + t + "\n");
+
+        if(Math.pow(2, k) <= (Matrix.hamming(n, t))) {
+            System.out.println("Hamming border: " + Math.pow(2, k) + " <= " + Matrix.hamming(n, t));
+        }
+        else {System.out.println("Hamming border is bad, because " + Math.pow(2, k) + " > " + Matrix.hamming(n, t));}
+
+        if(Math.pow(2, k) >= (Matrix.hilbert(n, d))) {
+            System.out.println("Hilbert border: " + Math.pow(2, k) + " >= " + Matrix.hilbert(n, d));
+        }
+        else {System.out.println("Hilbert border is bad, because " + Math.pow(2, k) + " < " + Matrix.hilbert(n, d));}
+
+        if(Math.pow(2, k) <= (Matrix.singleton(n, d))) {
+            System.out.println("Singleton border: " + Math.pow(2, k) + " <= " + Matrix.singleton(n, d));
+        }
+        else {System.out.println("Singleton border is bad, because " + Math.pow(2, k) + " > " + Matrix.singleton(n, d));}
+
     }
 }
