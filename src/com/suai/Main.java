@@ -15,22 +15,13 @@ public class Main {
         int k = Integer.parseInt(K);
 
         Matrix test = Matrix.getG(n, k);
-        System.out.println("G = \n" + test);
+        System.out.println("Matrix G = \n" + test);
 
-        Matrix vocab = test.getVocabulary();
-        System.out.println("Code words = \n" + vocab);
-        System.out.println("Number of words in the code = " + (int)Math.pow(2, k));
+        Matrix code_book = test.getVocabulary();
+        System.out.println("Code words = \n" + code_book);
+        System.out.println("Number of words in the code = " + code_book.getRow());
 
-    //   Matrix h = test.getH();
-    //   System.out.println("\nH = \n" + h);
-
-    //   Matrix ht = h.transpon();
-    //   System.out.println("Ht = \n" + ht);
-
-    //    Matrix check;
-    //    Matrix word = new Matrix(1, n);
-
-        int d = vocab.minD();
+        int d = code_book.minDistance();
         System.out.println("Min distance = " + d);
 
         int t = (d - 1) / 2;
@@ -46,10 +37,10 @@ public class Main {
         }
         else {System.out.println("Hilbert border is bad, because " + Math.pow(2, k) + " < " + Matrix.hilbert(n, d));}
 
-        if(Math.pow(2, k) <= (Matrix.singleton(n, d))) {
-            System.out.println("Singleton border: " + Math.pow(2, k) + " <= " + Matrix.singleton(n, d));
+        if(k <= Matrix.singleton(n, d)) {
+            System.out.println("Singleton border: " + k + " <= " + Matrix.singleton(n, d));
         }
-        else {System.out.println("Singleton border is bad, because " + Math.pow(2, k) + " > " + Matrix.singleton(n, d));}
+        else {System.out.println("Singleton border is bad, because " + k + " > " + Matrix.singleton(n, d));}
 
     }
 }
