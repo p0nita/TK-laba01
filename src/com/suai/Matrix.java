@@ -80,7 +80,7 @@ public class Matrix {
             res.setElement(i, i, 1);
         for (int i = k; i < n; i++){
             for (int j = 0; j < k; j++){
-                res.setElement(j, i, (int)Math.round(Math.random()+0.2));
+                res.setElement(j, i, (int)Math.round(Math.random()+0.15));
             }
         }
         return res;
